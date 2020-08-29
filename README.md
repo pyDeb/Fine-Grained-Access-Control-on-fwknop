@@ -40,6 +40,33 @@ Port 50000 on which the gateway is connected to the controller is not accessible
 ![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/7.png)
 
 
-
+Services with their corresponding values allowed in the controller's database
 
 ![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/8.png)
+
+
+Port 50000 on gateway is not accessible for the client
+
+![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/9.png)
+
+
+Running client program in command-line
+![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/10.png)
+
+
+Client successfully viewed port 80; it connected to the server.
+![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/11.png)
+
+
+Messages printed on gateway side after client's successful authentication and authorization
+![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/12.png)
+
+
+Firewall rules generated on gateway side
+![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/13.png)
+
+Firewall rules generated on gateway side in chain filter
+![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/14.png)
+
+
+![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/15.png)
