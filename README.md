@@ -35,36 +35,36 @@ To set up, clone the project and follow the instructions below.
 [root@sdp-gateway fwknop]# autoconf  
 [root@sdp-gateway fwknop]#./configure --prefix=/usr --sysconfdir=/etc --disable-client --with-iptables=/sbin/iptables  
 [root@sdp-gateway fwknop]# make  
-[root@sdp-gateway fwknop]# sudo make install
+[root@sdp-gateway fwknop]# sudo make install  
 
 
-root@osboxes: sudo apt-get install openssl libssl-dev libjson0 libjson0-dev libpcap-dev texinfo libtool autoconf git curl
-root@osboxes: git clone https://github.com/waverleylabs/fwknop
-root@osboxes: cd fwknop/
-root@osboxes:/home/jessie/fwknop# libtoolize --force
-root@osboxes:/home/jessie/fwknop# aclocal
-root@osboxes:/home/jessie/fwknop# autoheader
-root@osboxes:/home/jessie/fwknop# automake --force-missing --add-missing
-root@osboxes:/home/jessie/fwknop# autoconf
-root@osboxes:/home/jessie/fwknop# ./configure --prefix=/usr --sysconfdir=/etc --disable-server
-root@osboxes:/home/jessie/fwknop# make
-root@osboxes:/home/jessie/fwknop# sudo make install
+root@osboxes: sudo apt-get install openssl libssl-dev libjson0 libjson0-dev libpcap-dev texinfo libtool autoconf git curl  
+root@osboxes: git clone https://github.com/waverleylabs/fwknop  
+root@osboxes: cd fwknop/  
+root@osboxes:/home/jessie/fwknop# libtoolize --force  
+root@osboxes:/home/jessie/fwknop# aclocal  
+root@osboxes:/home/jessie/fwknop# autoheader  
+root@osboxes:/home/jessie/fwknop# automake --force-missing --add-missing  
+root@osboxes:/home/jessie/fwknop# autoconf  
+root@osboxes:/home/jessie/fwknop# ./configure --prefix=/usr --sysconfdir=/etc --disable-server  
+root@osboxes:/home/jessie/fwknop# make  
+root@osboxes:/home/jessie/fwknop# sudo make install  
 
 
-[root@sdp-gateway:~]# cd /etc/pki/tls/
-[root@sdp-gateway:~]# openssl genrsa -des3 -out rootCA.key 4096
-[root@sdp-gateway:~]# openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.crt
+[root@sdp-gateway:~]# cd /etc/pki/tls/  
+[root@sdp-gateway:~]# openssl genrsa -des3 -out rootCA.key 4096  
+[root@sdp-gateway:~]# openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.crt  
 
-[root@sdp-gateway:~]# openssl genrsa -out gateway.key 2048
+[root@sdp-gateway:~]# openssl genrsa -out gateway.key 2048  
 
-[root@sdp-gateway:~]# openssl req -new -key gateway.key -out gateway.csr
-[root@sdp-controller:~]# openssl genrsa -out controller.key 2048
-[root@sdp-controller:~]# openssl req -new -key controller.key -out controller.csr
+[root@sdp-gateway:~]# openssl req -new -key gateway.key -out gateway.csr  
+[root@sdp-controller:~]# openssl genrsa -out controller.key 2048  
+[root@sdp-controller:~]# openssl req -new -key controller.key -out controller.csr  
 
-root@osboxes:/etc/pki/tls# openssl genrsa -out sadeghi.key 2048
-root@osboxes:/etc/pki/tls# openssl req -new -key sadeghi.key -out sadeghi.csr
-[root@sdp-gateway tls]# openssl x509 -req -in gateway.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out gateway.crt -days 500 -sha256
+root@osboxes:/etc/pki/tls# openssl genrsa -out sadeghi.key 2048  
+root@osboxes:/etc/pki/tls# openssl req -new -key sadeghi.key -out sadeghi.csr  
+[root@sdp-gateway tls]# openssl x509 -req -in gateway.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out gateway.crt -days 500 -sha256  
 
-[root@sdp-controller:~]# openssl x509 -req -in controller.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out controller.crt -days 500 -sha256
-root@osboxes:/etc/pki/tls# openssl x509 -req -in sadeghi.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out sadeghi.crt -days 500 -sha256
+[root@sdp-controller:~]# openssl x509 -req -in controller.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out controller.crt -days 500 -sha256  
+root@osboxes:/etc/pki/tls# openssl x509 -req -in sadeghi.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out sadeghi.crt -days 500 -sha256  
 
