@@ -7,13 +7,13 @@ Fine-grained access in my project was done on elements, namely, **start and end 
 
 To set up, clone the project and follow the instructions below. 
 
-[root@sdp-controller:~]# apt update –y
-[root@sdp-controller:~]# apt install git mariadb-server nano screen –y
-[root@sdp-controller:~]# curl –sL https://rpm.nodesource.com/setup_9.x | bash -
-[root@sdp-controller:~]# apt –y install nodejs
-[root@sdp-controller:~]# git clone https://github.com/greenstatic/SDPcontroller.git
-[root@sdp-controller:~]# cd SDPcontroller/
-[root@sdp-controller:~]# npm install
+[root@sdp-controller:~]# apt update –y  
+[root@sdp-controller:~]# apt install git mariadb-server nano screen –y  
+[root@sdp-controller:~]# curl –sL https://rpm.nodesource.com/setup_9.x | bash -  
+[root@sdp-controller:~]# apt –y install nodejs  
+[root@sdp-controller:~]# git clone https://github.com/greenstatic/SDPcontroller.git  
+[root@sdp-controller:~]# cd SDPcontroller/  
+[root@sdp-controller:~]# npm install  
 [root@sdp-controller:~]# systemctl enable mariadb
 [root@sdp-controller:~]# sudo systemctl start mariadb
 
