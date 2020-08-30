@@ -1,76 +1,70 @@
-# Fine-Grained-Access-Control-on-fwknop
-This is an enhanced version of the software fwknop. It was my bachelor's final project. I have put the whole instruction for setting up fwknop, however, this is an implementation of fine-grained access control on fwknop. 
+# Setup-fwknop
+Fine-grained access control was my bachelor's final project. Unfortuantelty, I have lost the controller's source code. So, I decided to share a reliable and tested approach for setting up fwknop.
 The complete story of fwknop can be found at https://www.cipherdyne.org/fwknop/. 
 "fwknop stands for the "FireWall KNock OPerator", and implements an authorization scheme called Single Packet Authorization (SPA). This method of authorization is based around a default-drop packet filter (fwknop supports iptables and firewalld on Linux, ipfw on FreeBSD and Mac OS X, and PF on OpenBSD) and libpcap. SPA is essentially next generation port knocking (more on this below). The design decisions that guide the development of fwknop can be found in the blog post "Single Packet"
 
-Fine-grained access in this project is done on elements, namely, **start and end time of connection, IP range of client, start and end date, week days at which the client is allowed to make connection, and operating system.**
+Fine-grained access in my project was done on elements, namely, **start and end time of connection, IP range of client, start and end date, week days at which the client is allowed to make connection, and operating system.**
 
-To set up, clone the project and follow the instructions below. But first, I have demonstrated some screenshots of how the project works. 
+To set up, clone the project and follow the instructions below. 
 
-In this picture you see that one of the gateway interfaces has been assigned two IP addresses
+[root@sdp-controller:~]# apt update –y
+[root@sdp-controller:~]# apt install git mariadb-server nano screen –y
+[root@sdp-controller:~]# curl –sL https://rpm.nodesource.com/setup_9.x | bash -
+[root@sdp-controller:~]# apt –y install nodejs
+[root@sdp-controller:~]# git clone https://github.com/greenstatic/SDPcontroller.git
+[root@sdp-controller:~]# cd SDPcontroller/
+[root@sdp-controller:~]# npm install
+[root@sdp-controller:~]# systemctl enable mariadb
+[root@sdp-controller:~]# sudo systemctl start mariadb
 
-![An interface of two addresses on gateway](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/1.png)
+[root@sdp-controller:~]# sudo mysql –u root < ./setup/sdp.sql
 
+[root@sdp-gateway:~]# yum update -y
+[root@sdp-gateway:~]# yum groupinstall "Development Tools"
+[root@sdp-gateway:~]# yum install -y openssl texinfo libtool autoconf git openssl-devel json-c json-c-devel libpcap libpcap-devel iptables-services screen nano
+[root@sdp-gateway:~]# echo 1 > /proc/sys/net/ipv4/ip_forward
+[root@sdp-gateway:~]# systemctl enable iptables
+[root@sdp-gateway:~]# systemctl start iptables
+[root@sdp-gateway:~]# git clone https://github.com/waverleylabs/fwknop
+[root@sdp-gateway:~]# cd fwknop/
+[root@sdp-gateway fwknop]# libtoolize --force
+[root@sdp-gateway fwknop]# aclocal
+[root@sdp-gateway fwknop]# autoheader
+[root@sdp-gateway fwknop]# automake --force-missing --add-missing
 
-Running "ifconfig" on client side
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/2.png)
-
-
-Running "ifconfig" on server side
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/3.png)
-
-
-Server is listening on port 80
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/4.png)
-
-All ports are closed on gateway
-
-![All ports are closed on gateway](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/5.png)
-
-Even client cannot recieve ping responses from the gateway
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/6.png)
-
-
-Port 50000 on which the gateway is connected to the controller is not accessible for the client
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/7.png)
+[root@sdp-gateway fwknop]# autoconf
+[root@sdp-gateway fwknop]#./configure --prefix=/usr --sysconfdir=/etc --disable-client --with-iptables=/sbin/iptables
+[root@sdp-gateway fwknop]# make
+[root@sdp-gateway fwknop]# sudo make install
 
 
-Services with their corresponding values allowed in the controller's database
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/8.png)
-
-
-Port 50000 on gateway is not accessible for the client
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/9.png)
-
-
-Running client program in command-line
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/10.png)
-
-
-Client successfully viewed port 80; it connected to the server.
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/11.png)
+root@osboxes: sudo apt-get install openssl libssl-dev libjson0 libjson0-dev libpcap-dev texinfo libtool autoconf git curl
+root@osboxes: git clone https://github.com/waverleylabs/fwknop
+root@osboxes: cd fwknop/
+root@osboxes:/home/jessie/fwknop# libtoolize --force
+root@osboxes:/home/jessie/fwknop# aclocal
+root@osboxes:/home/jessie/fwknop# autoheader
+root@osboxes:/home/jessie/fwknop# automake --force-missing --add-missing
+root@osboxes:/home/jessie/fwknop# autoconf
+root@osboxes:/home/jessie/fwknop# ./configure --prefix=/usr --sysconfdir=/etc --disable-server
+root@osboxes:/home/jessie/fwknop# make
+root@osboxes:/home/jessie/fwknop# sudo make install
 
 
-Messages printed on gateway side after client's successful authentication and authorization
+[root@sdp-gateway:~]# cd /etc/pki/tls/
+[root@sdp-gateway:~]# openssl genrsa -des3 -out rootCA.key 4096
+[root@sdp-gateway:~]# openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 1024 -out rootCA.crt
 
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/12.png)
+[root@sdp-gateway:~]# openssl genrsa -out gateway.key 2048
 
+[root@sdp-gateway:~]# openssl req -new -key gateway.key -out gateway.csr
+[root@sdp-controller:~]# openssl genrsa -out controller.key 2048
+[root@sdp-controller:~]# openssl req -new -key controller.key -out controller.csr
 
-Firewall rules generated on gateway side
+root@osboxes:/etc/pki/tls# openssl genrsa -out sadeghi.key 2048
+root@osboxes:/etc/pki/tls# openssl req -new -key sadeghi.key -out sadeghi.csr
+[root@sdp-gateway tls]# openssl x509 -req -in gateway.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out gateway.crt -days 500 -sha256
 
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/13.png)
+[root@sdp-controller:~]# openssl x509 -req -in controller.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out controller.crt -days 500 -sha256
+root@osboxes:/etc/pki/tls# openssl x509 -req -in sadeghi.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out sadeghi.crt -days 500 -sha256
 
-Firewall rules generated on gateway side in chain filter
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/14.png)
-
-
-![](https://github.com/pyDeb/Fine-Grained-Access-Control-on-fwknop/blob/master/screenshots/15.png)
