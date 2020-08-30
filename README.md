@@ -14,27 +14,27 @@ To set up, clone the project and follow the instructions below.
 [root@sdp-controller:~]# git clone https://github.com/greenstatic/SDPcontroller.git  
 [root@sdp-controller:~]# cd SDPcontroller/  
 [root@sdp-controller:~]# npm install  
-[root@sdp-controller:~]# systemctl enable mariadb
-[root@sdp-controller:~]# sudo systemctl start mariadb
+[root@sdp-controller:~]# systemctl enable mariadb  
+[root@sdp-controller:~]# sudo systemctl start mariadb  
 
-[root@sdp-controller:~]# sudo mysql –u root < ./setup/sdp.sql
+[root@sdp-controller:~]# sudo mysql –u root < ./setup/sdp.sql  
 
-[root@sdp-gateway:~]# yum update -y
-[root@sdp-gateway:~]# yum groupinstall "Development Tools"
-[root@sdp-gateway:~]# yum install -y openssl texinfo libtool autoconf git openssl-devel json-c json-c-devel libpcap libpcap-devel iptables-services screen nano
-[root@sdp-gateway:~]# echo 1 > /proc/sys/net/ipv4/ip_forward
-[root@sdp-gateway:~]# systemctl enable iptables
-[root@sdp-gateway:~]# systemctl start iptables
-[root@sdp-gateway:~]# git clone https://github.com/waverleylabs/fwknop
-[root@sdp-gateway:~]# cd fwknop/
-[root@sdp-gateway fwknop]# libtoolize --force
-[root@sdp-gateway fwknop]# aclocal
-[root@sdp-gateway fwknop]# autoheader
-[root@sdp-gateway fwknop]# automake --force-missing --add-missing
+[root@sdp-gateway:~]# yum update -y  
+[root@sdp-gateway:~]# yum groupinstall "Development Tools"  
+[root@sdp-gateway:~]# yum install -y openssl texinfo libtool autoconf git openssl-devel json-c json-c-devel libpcap libpcap-devel iptables-services screen nano  
+[root@sdp-gateway:~]# echo 1 > /proc/sys/net/ipv4/ip_forward  
+[root@sdp-gateway:~]# systemctl enable iptables  
+[root@sdp-gateway:~]# systemctl start iptables  
+[root@sdp-gateway:~]# git clone https://github.com/waverleylabs/fwknop  
+[root@sdp-gateway:~]# cd fwknop/  
+[root@sdp-gateway fwknop]# libtoolize --force  
+[root@sdp-gateway fwknop]# aclocal  
+[root@sdp-gateway fwknop]# autoheader  
+[root@sdp-gateway fwknop]# automake --force-missing --add-missing  
 
-[root@sdp-gateway fwknop]# autoconf
-[root@sdp-gateway fwknop]#./configure --prefix=/usr --sysconfdir=/etc --disable-client --with-iptables=/sbin/iptables
-[root@sdp-gateway fwknop]# make
+[root@sdp-gateway fwknop]# autoconf  
+[root@sdp-gateway fwknop]#./configure --prefix=/usr --sysconfdir=/etc --disable-client --with-iptables=/sbin/iptables  
+[root@sdp-gateway fwknop]# make  
 [root@sdp-gateway fwknop]# sudo make install
 
 
